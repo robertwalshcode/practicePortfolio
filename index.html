@@ -7,11 +7,11 @@
         <link href="icon.ico" rel="icon" type="image/x-icon" >
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     </head>
         <body>
         <header>
-            <h2>Robert <span class="lname-decoration">Walsh</span></h2>
+            <h2><a href="index.html">Robert <span class="lname-decoration">Walsh</span></a></h2>
             <nav>
                 <ul>
                     <li><a href="#">About</a></li>
@@ -21,9 +21,7 @@
                 </ul>
             </nav>
         </header>
-            <div class="banner-background">
-
-            </div>
+        <div class="banner-background"></div>
         <main>
             <div class="banner">
                 <h1>Robert<br><span class="lname-decoration">Walsh</span></h1>
@@ -46,48 +44,63 @@
             </div>
             
             <div class="projects">
-                <h2>Projects</h2>
+                <h2>Past Projects</h2>
                 <div class="projects-container">
                     <div class="project">
-                        <img>
-                        <p></p>
+                        <img src="resources/images/CorkDocklandsGym.png">
+                        <p>Gym Website</p>
                     </div>
                     <div class="project">
-                        <img>
-                        <p></p>
+                        <img src="#">
+                        <p>Project 2</p>
                     </div>
                     <div class="project">
-                        <img>
-                        <p></p>
+                        <img src="#">
+                        <p>Project 3</p>
                     </div>
                     <div class="project">
-                        <img>
-                        <p></p>
+                        <img src="#">
+                        <p>Project 4</p>
                     </div>
                     <div class="project">
-                        <img>
-                        <p></p>
+                        <img src="#">
+                        <p>Project 5</p>
                     </div>
                 </div>
             </div>
         </main>    
+        <div class="footer-background"></div>
         <footer>
-            <div class="contact-me">
-                <h3>Get in touch</h3>
-                <form>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name">
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
-
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Type your message here..." row="4" cols="45"></textarea>
-                </form>
-            </div>
-            <div class="footer-links">
-                <a href="https://github.com/robertwalshcode"><img src="resources/images/github-icon.ico"></a>
+            <div class="footer-box">
+                <div class="contact-me">
+                    <h2>Get in touch</h2>
+                    <form>
+                        <div class="form-item">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name">
+                        </div>
+                        <div class="form-item">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-item">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" row="4" cols="45"></textarea>
+                        </div>
+                        <div class="form-item">
+                            <input type="submit" value="Send Message" id="send-button">
+                        </div>
+                    </form>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/robertwalshcode">
+                        <figure class="icon">
+                            <img src="resources/images/github-white.ico">
+                        </figure>
+                    </a>
+                </div>
             </div>
         </footer>
+        
     </body>
 </html>
