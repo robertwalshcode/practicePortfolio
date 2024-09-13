@@ -9,14 +9,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     </head>
-        <body>
+    <body>   
         <header id="main-header">
             <h2><a href="index.html">Robert <span class="lname-decoration">Walsh</span></a></h2>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#" id="contact-button">Contact me</a></li>
+                    <li><a href="#about" id="about-link">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact-me" id="contact-me-link">Contact me</a></li>
                     <li id="theme-switch"><button id="light-theme" onclick="lightTheme"></button><p id="theme-text">light switch</p></li>
                 </ul>
             </nav>
@@ -36,6 +36,7 @@
                 <div class="portrait-container">
                     <figure class="portrait-shape">
                         <img src="resources/images/portrait.jpg" alt="Robert Walsh" id="portrait">
+                        <figcaption id="portrait-caption">Robert Walsh - Web Developer</figcaption>
                     </figure>
                 </div>
                 <div class="languages">
@@ -107,41 +108,42 @@
                 </div>
             </div>
         </main>    
-        <div class="footer-background-1"></div>
-        <div class="footer-background-2"></div>
+        <!-- <div class="footer-background-1"></div>
+        <div class="footer-background-2"></div> -->
         <footer>
-            <div class="footer-box">
-                <div class="right-align-div">
-                    <div class="contact-me" id="contact-me">
-                        <h2>Get in touch</h2>
-                        <form>
-                            <div class="form-item">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name">
-                            </div>
-                            <div class="form-item">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email">
-                            </div>
-                            <div class="form-item">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" row="4" cols="45"></textarea>
-                            </div>
-                            <div class="form-item">
-                                <input type="submit" value="Send Message" id="send-button">
-                            </div>
-                        </form>
+            <div class="footer-background-1"></div>
+            <div class="footer-background-2"></div>
+            <div class="contact-me" id="contact-me">
+                <h2>Get in touch</h2>
+                <form>
+                    <div class="form-item">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name">
                     </div>
-                </div>
-                <div class="footer-links">
-                    <a href="https://github.com/robertwalshcode">
-                        <figure class="icon">
-                            <img src="resources/images/github-white.ico">
-                        </figure>
-                    </a>
-                </div>
+                    <div class="form-item">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-item">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" row="4" cols="45"></textarea>
+                    </div>
+                    <div class="form-item">
+                        <input type="submit" value="Send Message" id="send-button">
+                    </div>
+                </form>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/robertwalshcode">
+                    <figure class="icon">
+                        <img src="resources/images/github-white.ico">
+                    </figure>
+                </a>
             </div>
         </footer>
         <script src="resources/scripts/script.js"></script>
+        <script>
+
+        </script>
     </body>
 </html>

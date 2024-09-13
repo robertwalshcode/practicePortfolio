@@ -9,6 +9,7 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
     color: #E6EDF3;
     font-family: Mulish, sans-serif;
     position: relative;
-    overflow-y: hidden;
+    overflow-y: clip;
 }
 
 h1,
@@ -34,7 +35,6 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    font-family: Poppins, Aerial, sans-serif;
 }
 
 h3 {
@@ -119,13 +119,18 @@ header nav a:hover {
     color: rgb(106, 84, 255);
 }
 
-#contact-button {
-    border-radius: 21px;
-    background-color: #5B42F5;
-    transition: all 0.2s ease-in
+#about-link {
+    padding-right: 0px;
 }
 
-#contact-button:hover {
+#contact-me-link {
+    border-radius: 21px;
+    background-color: #5B42F5;
+    transition: all 0.2s ease-in;
+    column-gap: 20px
+}
+
+#contact-me-link:hover {
     background-color: #E6EDF3;
     color: #5B42F5;
 }
@@ -137,7 +142,7 @@ header button {
     height: 1.75rem;
     width: 1.75rem;
     background-color: #FFFFFF;
-    border: 0;
+    border: 2px solid white;
 }
 
 #theme-switch {
@@ -172,6 +177,7 @@ header button {
 main {
     margin-top: 4.1rem;
     margin: 0 auto;
+    overflow-y: hidden;
 }
 
 .banner {
@@ -235,7 +241,7 @@ main {
 
 .about {
     max-width: 101.25rem;
-    margin: auto;
+    margin:  5rem auto 0;
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr;
     /* letter-spacing: 0.1rem; */
@@ -256,7 +262,7 @@ main {
 .portrait-container {
     display: block;
     align-self: center;
-    justify-self: end;
+    justify-self: center;
     grid-area: 1 / 2 / 3 / 3;
 
 }
@@ -267,9 +273,16 @@ main {
 
 .portrait-shape img {
     /* height:15.25rem; */
-    height: 23.5rem;
+    height: 18rem;
     border-radius: 50%;
-    border: 2px #E6EDF3 solid;
+    border: 3px #E6EDF3 solid;
+}
+
+#portrait-caption {
+    text-align: center;
+    font-style: italic;
+    font-weight: 700;
+    margin-top: 0.5rem;
 }
 
 .languages {
@@ -392,18 +405,7 @@ main {
 
 footer {
     margin: 10rem auto 0;
-    width: 100%;
-}
-
-.footer-box {
-    margin: 0 auto;
     max-width: 101.25rem;
-}
-
-.right-align-div {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 7rem;
 }
 
 .contact-me {
@@ -415,7 +417,7 @@ footer {
     float: right;
     clear: both;
     text-align: center;
-    margin-bottom: 0rem;
+    margin-bottom: 2rem;
     color: #E6EDF3;
 }
 
@@ -514,6 +516,7 @@ footer .made-by{
 footer .icon {
     display: inline-block;
     margin: auto;
+    overflow-y: hidden;
 }
 
 .footer-background-1 {
@@ -525,7 +528,6 @@ footer .icon {
     bottom: -10rem;
     left: -6rem;
     z-index: -1;
-    overflow-y: clip;
 }
 
 .footer-background-2 {
@@ -537,5 +539,21 @@ footer .icon {
     bottom: -10rem;
     left: -6rem;
     z-index: -2;
-    overflow-y: clip;
+}
+
+@media only screen and (max-width: 2000px) {
+    main {
+        margin-left: 8%;
+        margin-right: 8%;
+    }
+    
+    footer {
+        margin-left: 8%;
+        margin-right: 8%;
+    }
+
+    .footer-box {
+        margin-left: 8%;
+        margin-right: 8%;
+    }
 }
