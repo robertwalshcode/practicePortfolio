@@ -10,14 +10,14 @@
         <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     </head>
         <body>
-        <header>
+        <header id="main-header">
             <h2><a href="index.html">Robert <span class="lname-decoration">Walsh</span></a></h2>
             <nav>
                 <ul>
-                    <li><a href="#">About</a></li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#">Projects</a></li>
-                    <li><a href="#">Contact Me</a></li>
-                    <li><button id="light-dark-switch">Switch to dark</button></li>
+                    <li><a href="#" id="contact-button">Contact me</a></li>
+                    <li id="theme-switch"><button id="light-theme" onclick="lightTheme"></button><p id="theme-text">light switch</p></li>
                 </ul>
             </nav>
         </header>
@@ -28,14 +28,19 @@
                 <p>I handle the design, development and deployment of high functioning and professional websites from start to finish</p>
                 <button>My Resume</button>
             </div>
-            <div class="about">
+            <div class="about" id="about">
                 <div class="about-info">
-                    <h2>I'm a front-end developer from Ireland</h2>
-                    <p>I've been developing websites using JavaScript, HTML and CSS for 2 years. In this time I have honed my skills to gain the ability to make functional, sleek, visually appealing front ends. I am always learning new things and enjoy the opportunity to learn and use the latest tools in my work</p>
+                    <h2>I’m a front-end developer from Ireland</h2>
+                    <p>I’ve been developing websites using JavaScript, HTML and CSS for 2 years. In this time I have honed my skills to gain the ability to make functional, sleek, visually appealing front ends. I’m always learning new things and enjoy the opportunity to learn and use the latest tools in my work.</p>
+                </div>
+                <div class="portrait-container">
+                    <figure class="portrait-shape">
+                        <img src="resources/images/portrait.jpg" alt="Robert Walsh" id="portrait">
+                    </figure>
                 </div>
                 <div class="languages">
                     <h2>Languages I use</h2>
-                    <div class="languages-container">
+                    <div class="languages-container" id="languages-container">
                         <h4>JavaScript</h4>
                         <h4>HTML</h4>
                         <h4>CSS</h4>
@@ -43,54 +48,90 @@
                 </div>
             </div>
             
-            <div class="projects">
+            <div class="projects" id="projects">
                 <h2>Past Projects</h2>
-                <div class="projects-container">
+                <div class="projects-container" id="projects-container">
                     <div class="project">
-                        <img src="resources/images/CorkDocklandsGym.png">
+                        <div class="project-info">
+                            <h3>Gym Project</h3>
+                            <p>Multipage website for a mock gym in Cork Docklands</p>
+                            <button type="button">Website</button>
+                        </div>
+                        <img class="project-image" src="resources/images/CorkDocklandsGym.png">
                         <p>Gym Website</p>
                     </div>
                     <div class="project">
-                        <img src="#">
+                        <div class="project-info">
+                            <h3>Gym Project</h3>
+                            <p>Multipage website for a mock gym in Cork Docklands</p>
+                            <button type="button">Website</button>
+                        </div>
+                        <figure>
+                            <img class="project-image" src="#">
+                        </figure>
                         <p>Project 2</p>
                     </div>
                     <div class="project">
-                        <img src="#">
+                        <div class="project-info">
+                            <h3>Gym Project</h3>
+                            <p>Multipage website for a mock gym in Cork Docklands</p>
+                            <button type="button">Website</button>
+                        </div>
+                        <figure>
+                            <img class="project-image" src="#">
+                        </figure>
                         <p>Project 3</p>
                     </div>
                     <div class="project">
-                        <img src="#">
+                        <div class="project-info">
+                            <h3>Gym Project</h3>
+                            <p>Multipage website for a mock gym in Cork Docklands</p>
+                            <button type="button">Website</button>
+                        </div>
+                        <figure>
+                            <img class="project-image" src="#">
+                        </figure>
                         <p>Project 4</p>
                     </div>
                     <div class="project">
-                        <img src="#">
+                        <div class="project-info">
+                            <h3>Gym Project</h3>
+                            <p>Multipage website for a mock gym in Cork Docklands</p>
+                            <button type="button">Website</button>
+                        </div>
+                        <figure>
+                            <img class="project-image" src="#">
+                        </figure>
                         <p>Project 5</p>
                     </div>
                 </div>
             </div>
         </main>    
-        <div class="footer-background"></div>
+        <div class="footer-background-1"></div>
+        <div class="footer-background-2"></div>
         <footer>
             <div class="footer-box">
-                <div class="contact-me">
-                    <h2>Get in touch</h2>
-                    <form>
-                        <div class="form-item">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name">
-                        </div>
-                        <div class="form-item">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
-                        </div>
-                        <div class="form-item">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" row="4" cols="45"></textarea>
-                        </div>
-                        <div class="form-item">
-                            <input type="submit" value="Send Message" id="send-button">
-                        </div>
-                    </form>
+                <div class="right-align-div">
+                    <div class="contact-me" id="contact-me">
+                        <h2>Get in touch</h2>
+                        <form>
+                            <div class="form-item">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name">
+                            </div>
+                            <div class="form-item">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email">
+                            </div>
+                            <div class="form-item">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" row="4" cols="45"></textarea>
+                            </div>
+                            <div class="form-item">
+                                <input type="submit" value="Send Message" id="send-button">
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <a href="https://github.com/robertwalshcode">
@@ -101,6 +142,6 @@
                 </div>
             </div>
         </footer>
-        
+        <script src="resources/scripts/script.js"></script>
     </body>
 </html>
