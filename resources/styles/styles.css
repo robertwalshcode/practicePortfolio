@@ -244,7 +244,6 @@ main {
     margin:  5rem auto 0;
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr;
-    /* letter-spacing: 0.1rem; */
     line-height: 1.5rem;
     font-family: Quicksand, Helvetica, sans-serif;
 }
@@ -272,7 +271,6 @@ main {
 }
 
 .portrait-shape img {
-    /* height:15.25rem; */
     height: 18rem;
     border-radius: 50%;
     border: 3px #E6EDF3 solid;
@@ -364,7 +362,7 @@ main {
 }
 
 .project2-background {
-    background-image: url('resources/images/CorkDocklandsGym.png');
+    background-image: url('../images/breakout.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 16 / 9;

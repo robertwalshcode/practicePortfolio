@@ -1,5 +1,5 @@
-// function to change to light theme
 
+// function to change to light theme
 const lightTheme = () => {
     document.body.style.backgroundColor = '#E6EDF3';
     document.body.style.color = '#0D0A20';
@@ -14,7 +14,6 @@ const lightTheme = () => {
 }
 
 // function to change to dark mode
-
 const darkTheme =  () => {
     document.body.style.backgroundColor = '#0D0A20';
     document.body.style.color = '#E6EDF3';
@@ -28,11 +27,11 @@ const darkTheme =  () => {
     document.getElementById("dark-theme").id = 'light-theme';
 }
 
+// event listner to change theme
 document.getElementById("light-theme").addEventListener('click', lightTheme);
 
-// allow project-content to appear on mouseover project-background
+// allow project-content to appear on mouseover project-background + allow project-content to become hidden on mouseout of project-background
 //define variables
-
 let projectBackground1 = document.getElementById('project1-background');
 let projectBackground2 = document.getElementById('project2-background');
 let projectBackground3 = document.getElementById('project3-background');
@@ -40,16 +39,8 @@ let projectBackground4 = document.getElementById('project4-background');
 let projectBackground5 = document.getElementById('project5-background');
 let projectContent = document.getElementsByClassName('project-content');
 
-
-// const projectContentIn = () => {
-//     for(let i=0; i < projectContent.length; )
-//     if(projectContent[]){}
-//     projectContent[0].style.visibility = 'visible';
-// }
-// const projectContentOut = () => {
-// projectContent[0].style.visibility = 'hidden';
-// }
-
+// allow project-content to appear on mouseover project-background 
+// allow project-content to become hidden on mouseout project-background
 //1
 const projectContentIn1 = () => {
     projectContent[0].style.visibility = 'visible';
@@ -87,7 +78,7 @@ projectContent[4].style.visibility = 'hidden';
 }
 
 
-
+// event listeners to change content on hover
 projectBackground1.addEventListener('mouseover', projectContentIn1);
 projectBackground1.addEventListener('mouseout', projectContentOut1);
 
@@ -102,8 +93,3 @@ projectBackground4.addEventListener('mouseout', projectContentOut4);
 
 projectBackground5.addEventListener('mouseover', projectContentIn5);
 projectBackground5.addEventListener('mouseout', projectContentOut5);
-// allow project-content to become hidden on mouseout of project-background
-
-// const projectContentOut {
-
-// }
