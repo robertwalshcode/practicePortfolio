@@ -261,7 +261,7 @@ main {
 .portrait-container {
     display: block;
     align-self: center;
-    justify-self: center;
+    justify-self: end;
     grid-area: 1 / 2 / 3 / 3;
 
 }
