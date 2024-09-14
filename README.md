@@ -1,4 +1,4 @@
-# practicePortfolio
+# My Portfolio
 
 ## What is this?
 This is my first attempt at making a portfolio page. I hope it will represent me well as a person and as a developer.
