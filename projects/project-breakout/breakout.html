@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Breakout</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+
+        }
+    </style>
+</head>
+
+<body>
+<script>
+    
+    "use strict"
+
+    // game parameters
+    const ballSpd = 0.5 // starting ball speed as fraction of screen height per second
+    const ballSpdMax = 2 // max ball speed as a multiple of starting ball speed
+    const ballSpin = 0.2 // ball deflection off the paddle (0 = no spin, 1 = high spin)
+    const brickRows = 8; // number of brick rows
+    const brickCols = 14; // starting number of brick columns
+    const brickGap = 0.3; // brick gap as a fraction of wall width
+    const brickMargin = 6; // number of empty rows above the bricks
+    const gameLives = 3; // starting number of game lives
+    const keyScore = "highscore"; // save key for local storage of high score
+    const maxLevel = 10; // maximum game level (+2 rows of brick per level)
+    const minBounceAngle = 30; // minimum bounce angle from the horizontal in degrees
+    const paddleSize = 1.5; // paddle size as a multiple of wall thickness
+    const paddleW = 0.1; // paddle width as a fraction of screen width
+    const paddleSpd = 0.6; // fraction of screen width per second
+    const pupBonus = 50; // bonus points for collecting an extra powerup
+    const pupChance = 0.1; // probability of a powerup per brick hit (between 0 and 1)
+    const pupSpd = 0.15 // powerup speed as a fraction of screen height per second
+    const WALL = 0.02; // wall/ball size as a fraction of the shortest screen dimension
+
+  
+
+    // colours
+    const colorBackground = "black";
+    const colorPaddle = "white";
+    const colorWall = "grey";
+    const colorBall = "white";
+    const colorText = "white";
+
+    // text
+    const textFont = "Lucida Console";
+    const textLevel = "Level";
+    const textLives = "Ball";
+    const textScore = "Score";
+    const textScoreHigh = "BEST";
+    const textGameOver = "GAME OVER";
+    const textWin = "!!! YOU WIN !!!";
+
+    // definitions
+    const direction = {
+        left: 0,
+        right: 1,
+        stop: 2
+    }
+
+    const pupType = {
+        extension: {color: "dodgerblue", symbol: "="},
+        life: {color: "hotpink", symbol: "+"},
+        sticky: {color: "forestgreen", symbol: "~"},
+        super: {color: "magenta", symbol: "s"}
+    }
+
+    // set up game canvas and context
+    let canv = document.createElement("canvas");
+    document.body.appendChild(canv);
+    let ctx = canv.getContext("2d");
+
+    // set up sound effects
+    let fxBrick = new Audio("sounds/brick.m4a");
+    let fxPaddle = new Audio("sounds/paddle.m4a");
+    let fxPowerup = new Audio("sounds/powerup.m4a");
+    let fxWall = new Audio("sounds/wall.m4a");
+
+    // volume (temporary volume fix for headset users)
+    /*
+    fxBrick.volume = 0.2;
+    fxPaddle.volume = 0.2;
+    fxPowerup.volume = 0.2;
+    fxWall.volume = 0.2;
+    */
+
+    // game variable
+    let paddle, ball, bricks = [], pups = [];
+    let gameOver, win, pupExtension, pupSticky, pupSuper;
+    let level, lives, score, scoreHigh;
+    let numBricks, textSize, touchX;
+
+
+    // dimensions + start a new game
+    let height, width, wall;
+    setDimensions();
+    
+
+    // event listeners
+    canv.addEventListener("touchcancel", touchCancel)
+    canv.addEventListener("touchend", touchEnd)
+    canv.addEventListener("touchmove", touchMove)
+    canv.addEventListener("touchstart", touchStart)
+    document.addEventListener("keydown", keyDown);
+    document.addEventListener("keyup", keyUp);
+    window.addEventListener("resize", setDimensions);
+
+    // set up game loop
+    let timeDelta, timeLast;
+    requestAnimationFrame(loop);
+
+    function loop(timeNow){
+        if(!timeLast) {
+            timeLast = timeNow;
+        }
+
+        // calculate time difference
+        timeDelta = (timeNow - timeLast) * 0.001;   // to get seconds
+        timeLast = timeNow;
+
+        //update
+        if (!gameOver){
+            updatePaddle(timeDelta);
+            updateBall(timeDelta);
+            updateBricks(timeDelta);
+            updatePups(timeDelta);
+        }
+
+        // draw
+        drawBackground();
+        drawWalls();
+        drawPups();
+        drawPaddle();
+        drawBricks();
+        drawText();
+        drawBall();
+
+        // call next loop
+        requestAnimationFrame(loop);
+    }
+
+    function applyBallSpeed(angle){
+
+        // update the x and y velocities of the ball
+        ball.xv = ball.spd * Math.cos(angle);
+        ball.yv = -ball.spd * Math.sin(angle);
+    }
+
+    function createBricks(){
+
+        // row dimensions
+        let minY = wall;
+        let maxY = ball.y - ball.h * 3.5
+        let totalSpaceY = maxY - minY;
+        let totalRows = brickMargin + brickRows + maxLevel * 2;
+        let rowH = totalSpaceY / totalRows;
+        let gap = wall * brickGap;
+        let h = rowH - gap;
+        textSize = rowH * brickMargin * 0.5;
+
+        // column dimensions
+        let totalSpaceX = width - wall * 2;
+        let colW = (totalSpaceX - gap) / brickCols;
+        let w = colW - gap;
+
+        // populate the bricks array
+        bricks = [];
+        let cols = brickCols;
+        let rows = brickRows + level * 2;
+        let color, left, top, rank, rankHigh, score, spdMult;
+        numBricks = cols * rows;
+        rankHigh = rows * 0.5 - 1;
+        for (let i = 0; i < rows; i++){
+            bricks[i] = [];
+            rank = Math.floor(i * 0.5);
+            score = (rankHigh - rank) * 2 + 1;
+            spdMult = 1 + (rankHigh - rank) / rankHigh * (ballSpdMax - 1)
+            color = getBrickColor(rank, rankHigh);
+            top = wall + (brickMargin + i) * rowH;
+            for (let j = 0; j < cols; j++){
+                left = wall + gap + j * colW;
+                bricks[i][j] = new Brick(left, top, w, h, color, score, spdMult);
+            }
+        }
+    }
+
+    function drawBackground(){
+        ctx.fillStyle = colorBackground;
+        ctx.fillRect(0, 0, width, height);
+    }
+
+    function drawPaddle(){
+        ctx.fillStyle = pupSticky ? pupType.sticky.color: colorPaddle;
+        ctx.fillRect(paddle.x - paddle.w * 0.5, paddle.y - paddle.h * 0.5, paddle.w, paddle.h);
+    }
+
+    function drawPups(){
+        ctx.lineWidth = wall * 0.35;
+        for (let pup of pups){
+            ctx.fillStyle = pup.type.color;
+            ctx.strokeStyle = pup.type.color;
+            ctx.strokeRect(pup.x - pup.w * 0.5, pup.y - pup.h * 0.5, pup.w, pup.h);
+            ctx.font = "bold " + pup.h + "px " + textFont;
+            ctx.textAlign = "center";
+            ctx.fillText(pup.type.symbol, pup.x, pup.y);
+        }
+    }
+
+    function drawText(){
+        ctx.fillStyle = colorText
+
+        // dimensions
+        let labelSize = textSize * 0.5
+        let margin = wall * 2;
+        let maxWidth = width - margin * 2;
+        let maxWidth1 = maxWidth * 0.27;
+        let maxWidth2 = maxWidth * 0.2;
+        let maxWidth3 = maxWidth * 0.2;
+        let maxWidth4 = maxWidth * 0.27;
+        let x1 = margin;
+        let x2 = width * 0.37;
+        let x3 = width * 0.63;
+        let x4 = width - margin;
+        let yLabel = wall + labelSize;
+        let yValue = yLabel + textSize * 0.9;
+
+        // labels
+        ctx.font = labelSize + "px " + textFont;
+        ctx.textAlign = "left";
+        ctx.fillText(textScore, x1, yLabel, maxWidth1);
+        ctx.textAlign = "center";
+        ctx.fillText(textLives, x2, yLabel, maxWidth2);
+        ctx.fillText(textLevel, x3, yLabel, maxWidth3);
+        ctx.textAlign = "right";
+        ctx.fillText(textScoreHigh, x4, yLabel, maxWidth4);
+
+        // values
+        ctx.font = textSize + "px " + textFont;
+        ctx.textAlign = "left";
+        ctx.fillText(score, x1, yValue, maxWidth1);
+        ctx.textAlign = "center";
+        ctx.fillText(lives + "/" + gameLives, x2, yValue, maxWidth2);
+        ctx.fillText(level, x3, yValue, maxWidth3);
+        ctx.textAlign = "right";
+        ctx.fillText(scoreHigh, x4, yValue, maxWidth4);
+
+        // game over or win 
+        if (gameOver){
+            let text = win ? textWin : textGameOver;
+            ctx.font = textSize + "px " + textFont;
+            ctx.textAlign = "center";
+            ctx.fillText(text, width * 0.5, paddle.y - textSize, maxWidth);
+        	
+        }
+
+        // win
+    }
+
+    function drawBall(){
+        ctx.fillStyle = pupSuper ? pupType.super.color : colorBall;
+        ctx.fillRect(ball.x - ball.w * 0.5, ball.y - ball.h * 0.5, ball.w, ball.h);
+    }
+
+    function drawBricks(){
+        for (let row of bricks){
+            for (let brick of row){
+                if (brick == null){
+                    continue;
+                }
+                ctx.fillStyle = brick.color;
+                ctx.fillRect(brick.left, brick.top, brick.w, brick.h);
+            }
+        }
+    }
+
+    function drawWalls(){
+        let hWall = wall * 0.5;
+        ctx.lineWidth = wall;
+        ctx.strokeStyle = colorWall;
+        ctx.beginPath();
+        ctx.moveTo(hWall, height);
+        ctx.lineTo(hWall, hWall);
+        ctx.lineTo(width - hWall, hWall);
+        ctx.lineTo(width - hWall, height);
+        ctx.stroke();
+    }
+
+    // red = 0, orange = 0.33, yellow = .67, green = 1
+    function getBrickColor(rank, highestRank){
+        let fraction = rank / highestRank;
+        let r, g, b = 0;
+
+        // red to orange to yellow (increase green)
+        if (fraction <= 0.67){
+            r = 255;
+            g = 255 * fraction / 0.67;
+        }
+
+        // yellow to green (reduce red)
+        else {
+            r = 255 * (1 - fraction) / 0.33;
+            g = 255;
+        }
+
+        // return the rgb color string
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
+
+    function keyDown(ev){
+        switch(ev.keyCode){
+            case 32: // spacebar (serve the ball)
+                serve();
+                pupSticky = false;
+                if (gameOver){
+                    newGame();
+                }
+                break;
+            case 37: // left arrow key (move paddle left)
+                movePaddle(direction.left);
+                break;
+            case 39: // right arrow key (move paddle right)
+                movePaddle(direction.right);
+                break;
+        }
+    }
+    
+    function keyUp(ev){
+        switch(ev.keyCode){
+            case 37: // left arrow key (stop moving)
+            case 39: // right arrow key (stop moving)
+                movePaddle(direction.stop);
+                break;
+        }
+    }
+
+    function movePaddle(paddleDirection){
+        switch (paddleDirection){
+            case direction.left:
+                paddle.xv = -paddle.spd;
+                break;
+            case direction.right:
+                paddle.xv = paddle.spd;
+                break;
+            case direction.stop:
+                paddle.xv = 0;
+                break;
+        }
+    }
+    
+    function newBall(){
+        pupExtension = false;
+        pupSticky = false;
+        pupSuper = false;
+        paddle = new Paddle();
+        ball = new Ball();
+    }
+
+    function newGame(){
+        gameOver = false;
+        level = 0;
+        lives = gameLives;
+        score = 0;
+        win = false;
+
+        // get high score from local storage
+        let scoreStr = localStorage.getItem(keyScore);
+        if (scoreStr == null){
+            scoreHigh = 0;
+        } else {
+            scoreHigh = parseInt(scoreStr);
+        }
+        
+        // start a new level
+        newLevel();
+    }
+
+    function newLevel(){
+        pups = [];
+        touchX = null;
+        newBall();
+        createBricks();
+    }
+
+    function outOfBounds(){
+        lives--;
+        if (lives == 0){
+            gameOver = true
+        }
+        newBall();
+    }
+
+    function serve(){
+
+        // ball already in motion
+        if (ball.yv != 0){
+            return false;
+        }
+
+        // random angle, between 45 and 135 degrees
+        let angle = Math.random() * Math.PI / 2 + Math.PI / 4;
+        applyBallSpeed(pupSticky ? Math.PI / 2 : angle);
+        fxPaddle.play();
+        return true;
+    }
+
+    function setDimensions(){
+        height = window.innerHeight; 
+        width = window.innerWidth;
+        wall = WALL * (height < width ? height : width);
+        canv.width = width;
+        canv.height = height;
+        ctx.textBaseline = "middle";
+        newGame();
+    }
+
+    function spinBall(){
+        let upwards = ball.yv < 0;
+        let angle = Math.atan2(-ball.yv, ball.xv);
+        angle += (Math.random() * Math.PI / 2 - Math.PI / 4) * ballSpin;
+
+        // minimum bounce angle
+        let minBounceAng = minBounceAngle / 180 * Math.PI; // radians
+        if (upwards){
+            if (angle < minBounceAng){
+                angle = minBounceAng;
+            } else if (angle > Math.PI - minBounceAng){
+                angle = Math.PI - minBounceAng;
+            }
+        } else {
+            if (angle > -minBounceAng){
+                angle = -minBounceAng;
+            } else if (angle < -Math.PI + minBounceAng){
+                angle = -Math.PI + minBounceAng;
+            }
+        }
+
+        applyBallSpeed(angle)
+    }
+
+    function updatePaddle(delta){
+        
+        // handle touch
+        if (touchX != null){
+            if (touchX > paddle.x + wall){
+                movePaddle(direction.right);
+            } else if (touchX < paddle.x - wall){
+                movePaddle(direction.left);
+            } else{
+                movePaddle(direction.stop);
+            }
+        }
+        
+        // move the paddle
+        let lastPaddleX = paddle.x;
+        paddle.x += paddle.xv * delta;
+
+        // stop paddle at walls
+        if (paddle.x < wall + paddle.w * 0.5){
+            paddle.x = wall + paddle.w * 0.5;
+        } else if(paddle.x > canv.width - wall - paddle.w * 0.5){
+            paddle.x = canv.width - wall - paddle.w * 0.5;
+        }
+
+        // move the stationary ball with paddle
+        if (ball.yv == 0){
+            ball.x += paddle.x - lastPaddleX;
+        }
+
+        // collect powerups
+        for (let i = pups.length - 1; i >= 0; i--){
+            if (
+                pups[i].x + pups[i].w * 0.5 > paddle.x - paddle.w * 0.5
+                && pups[i].x - pups[i].w * 0.5 < paddle.x + paddle.w * 0.5
+                && pups[i].y + pups[i].h * 0.5 > paddle.y - paddle.h * 0.5
+                && pups[i].y - pups[i].h * 0.5 < paddle.y + paddle.h * 0.5
+            ){
+                switch(pups[i].type){
+                    case pupType.extension:
+                        // double the width of the paddle
+                        if (pupExtension){
+                            score += pupBonus;
+                        } else {
+                        pupExtension = true;
+                        paddle.w *= 1.4;
+                        }
+                        break;
+                    case pupType.life:
+                        // add a life
+                        lives++;
+                        break;
+                    case pupType.sticky:
+                        // make ball stick to paddle
+                        if (pupSticky){
+                            score += pupBonus;
+                        } else {
+                        pupSticky = true;
+                        }
+                        break;
+                    case pupType.super:
+                    if (pupSuper){
+                            score += pupBonus;
+                        } else {
+                        pupSuper = true;                        
+                        }
+                        break;
+                }
+                pups.splice(i, 1);
+                fxPowerup.play();
+            }
+        }
+    }
+
+    function updatePups(delta){
+        for (let i = pups.length - 1; i >= 0; i--){
+            pups[i].y += pups[i].yv * delta;
+
+            // delete off-screen pups
+            if (pups[i].y - pups[i].h * 0.5 > height){
+                pups.splice(i, 1);
+            }
+        }
+    }
+
+    function updateScore(brickScore){
+        score += brickScore;
+
+        // check for a high score
+        if (score > scoreHigh){
+            scoreHigh = score;
+            localStorage.setItem(keyScore, scoreHigh)
+        }
+    }
+
+    function touchCancel(ev){
+        touchX = null;
+        movePaddle(direction.stop)
+    }
+
+    function touchEnd(ev){
+        touchX = null;
+        movePaddle(direction.stop)    
+    }
+
+    function touchMove(ev){
+        touchX = ev.touches[0].clientX;
+    }
+
+    function touchStart(ev){
+        if(serve()){
+            if (gameOver){
+                newGame();
+            }
+            return;
+        }
+        touchX = ev.touches[0].clientX;
+    }
+
+    function updateBall(delta){
+        ball.x += ball.xv * delta;
+        ball.y += ball.yv * delta;
+
+        // bounce the ball off the walls
+        if (ball.x < wall +ball.w * 0.5){
+            ball.x = wall + ball.w * 0.5;
+            ball.xv = -ball.xv;
+            fxWall.play();
+            spinBall();
+        } else if (ball.x > canv.width - wall - ball.w * 0.5){
+            ball.x = canv.width - wall - ball.w * 0.5;
+            ball.xv = -ball.xv;
+            fxWall.play();
+            spinBall();
+        } else if (ball.y < wall + ball.h * 0.5){
+            ball.y = wall + ball.h * 0.5;
+            ball.yv = -ball.yv;
+            fxWall.play();
+            spinBall();
+        }
+
+        // bounce off the paddle
+        if (ball.y > paddle.y - paddle.h * 0.5 - ball.h * 0.5
+            && ball.y < paddle.y + paddle.h * 0.5
+            && ball.x > paddle.x - paddle.w * 0.5 - ball.w * 0.5
+            && ball.x < paddle.x + paddle.w * 0.5 + ball.w * 0.5 
+        ){
+            ball.y = paddle.y - paddle.h * 0.5 - ball.h *0.5;
+            if (pupSticky){
+                ball.xv = 0;
+                ball.yv = 0;
+            } else {
+                ball.yv = -ball.yv;
+                spinBall();
+            }
+            fxPaddle.play();
+        }
+
+        // handle out of bounds
+        if (ball.y > canv.height){
+            outOfBounds();
+        }
+    }
+
+    function updateBricks(delta){
+
+        // check for ball collisions
+        OUTER: for (let i = 0; i < bricks.length; i++){
+            for (let j = 0; j < brickCols; j++){
+                if (bricks[i][j] != null && bricks[i][j].intersect(ball)){
+                    updateScore(bricks[i][j].score);
+                    ball.setSpeed(bricks[i][j].spdMult);
+
+                    // set ball to the edge of the brick
+                    if (ball.yv < 0){ // upwards
+                        ball.y = bricks[i][j].bot + ball.h * 0.5
+                    } else { // downwards
+                        ball.y = bricks[i][j].top - ball.h * 0.5
+                    }
+
+                    // create a powerup
+                    if (Math.random() <= pupChance){
+                        let px = bricks[i][j].left + bricks [i][j].w / 2;
+                        let py = bricks[i][j].top + bricks [i][j].h / 2;
+                        let pSize = bricks[i][j].w / 2;
+                        let pKeys = Object.keys(pupType);
+                        let pKey = pKeys[Math.floor(Math.random() * pKeys.length)]
+                        pups.push(new PowerUp(px, py, pSize, pupType[pKey]));
+                    }
+
+                    // bounce the ball (if not a super ball) and destroy the brick
+                    if (!pupSuper){
+                    ball.yv = -ball.yv;
+                    spinBall();
+                    }
+                    bricks[i][j] = null;
+                    numBricks--;
+                    fxBrick.play();
+                    
+                    break OUTER;
+                }
+            } 
+        }
+
+        // next level
+        if (numBricks == 0){
+            if(level < maxLevel){
+                level++;
+                newLevel();
+            } else{
+                gameOver = true;
+                win = true;
+                newBall();
+            }
+        }
+    }
+
+    function Paddle(){
+        this.w = paddleW * width;
+        this.h = wall * paddleSize;
+        this.x = canv.width / 2;
+        this.y = canv.height - wall * 3.5 + this.h / 2;
+        this.spd = paddleSpd * width
+        this.xv = 0;
+    }
+
+    function Ball(){
+        this.w = wall;
+        this.h = wall;
+        this.x = paddle.x;
+        this.y = paddle.y - paddle.h / 2 - this.h / 2;
+        this.spd = ballSpd * height
+        this.xv = 0;
+        this.yv = 0;
+
+        this.setSpeed = function(spdMult){
+            this.spd = Math.max(this.spd, ballSpd * height * spdMult);
+            console.log("spd = " + this.spd);
+        }
+    }
+
+    function Brick(left, top, w, h, color, score, spdMult){
+        this.w = w;
+        this.h = h;
+        this.bot = top + h;
+        this.left = left;
+        this.right = left + w;
+        this.top = top;
+        this.color = color;
+        this.score = score;
+        this.spdMult = spdMult;
+
+        this.intersect = function(ball){
+            let bBot = ball.y + ball.h * 0.5;
+            let bLeft = ball.x - ball.w * 0.5;
+            let bRight = ball.x + ball.w * 0.5;
+            let bTop = ball.y - ball.h * 0.5;
+            return this.left < bRight
+                && bLeft < this.right
+                && this.bot > bTop
+                && bBot > this.top;
+        }
+    }
+
+    function PowerUp(x, y, size, type){
+        this.w = size;
+        this.h = size;
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.yv = pupSpd * height;
+    }
+
+
+</script>
+</body>
+
+</html>

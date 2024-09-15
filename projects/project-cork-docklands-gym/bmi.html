@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gym Cork</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="with=device-width, initial-scale:1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/head&foot.css" />
+    <link rel="stylesheet" href="styles/styles_bmi.css" />
+    <link rel="stylesheet" href="styles/slicknav.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        <span class="h1FirstLetters">C</span>ork
+        <span class="h1FirstLetters">D</span>ocklands
+        <span class="h1FirstLetters">G</span>ym
+      </h1>
+
+      <nav id="mobile_menu"></nav>
+
+      <nav id="nav-menu">
+        <ul>
+          <li>
+            <a href="index.html" class="nav-menu__link">Home</a>
+          </li>
+          <li><a href="bmi.html" class="nav-menu__link">BMI Calculator</a></li>
+          <li>
+            <a href="membership.html" class="nav-menu__link">Membership</a>
+          </li>
+        </ul>
+      </nav>
+      <a href="index.html"><img id="headerLogo" src="images/logo.png" /></a>
+    </header>
+
+    <main class="main-bmi">
+      <div class="main-bmi__description">
+        <h2 id="bmiHeading">BMI Calculator</h2>
+        <p>
+          Here you can calculate your <span>Body Mass Index</span> using just
+          your height and weight! <br />
+          Just put your details in and we will tell you what your Body Mass
+          Index is!
+        </p>
+      </div>
+      <div class="main-bmi__calculator">
+        <div class="main-bmi__calculator__info">
+          <h3 class="bmiSubheading">Why you should know your BMI?</h3>
+          <img id="bmi1" src="images/bmi1.png" alt="bmi" />
+          <p>
+            BMI, or Body Mass Index, is a key indicator of your overall health
+            and helps assess whether you are at a healthy weight based on your
+            height. It provides an estimate of body fat and potential health
+            risks. While it is not a perfect measure since it doesn't
+            distinguish between muscle mass and fat mass, it does give you a
+            general idea of where you stand in terms of health. Maintaining a
+            healthy BMI is important because being overweight or underweight can
+            increase the risk of various health conditions such as heart
+            disease, diabetes, and high blood pressure. By keeping track of your
+            BMI and making adjustments to your lifestyle if needed, you can
+            lower your health risks and improve your overall well-being.
+          </p>
+        </div>
+
+        <div class="main-bmi__calculator__block">
+          <h3 class="bmiSubheading">Discover your BMI in seconds!</h3>
+          <table id="bmiInputFields">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="userHeightInput"
+                  placeholder="Height (in cm):"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="userWeightInput"
+                  placeholder="Weight (in kg):"
+                />
+              </td>
+            </tr>
+          </table>
+
+          <div id="bmiButtonsDiv">
+            <button onClick="bmi()" class="button">Calculate</button>
+            <button onClick="reset()" class="button">Reset</button>
+          </div>
+          <div id="resultsLabel"><label id="bmiResult"></label></div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer">
+        <p id="contactInfo">
+          Contact Us<br />
+          <a href="tel:+353831234567">+35383 123 4567</a>
+          <br />
+          <a href="mailto:contact@cdg.com">contact@cdg.com</a>
+          <br />
+        </p>
+        <a href="index.html"><img id="footerLogo" src="images/logo.png" /></a>
+        <nav id="fNav">
+          <table id="fNAvTable">
+            <tr>
+              <td><a href="#top">Top</a></td>
+            </tr>
+            <tr>
+              <td><a href="about.html">About</a></td>
+            </tr>
+            <tr>
+              <td><a href="faq.html">FAQ</a></td>
+            </tr>
+            <tr>
+              <td><a href="careers.html">Careers</a></td>
+            </tr>
+          </table>
+        </nav>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav-menu").slicknav({ prependTo: "#mobile_menu" });
+      });
+    </script>
+    <script src="js/bmi.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

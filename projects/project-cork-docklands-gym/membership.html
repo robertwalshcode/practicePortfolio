@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gym Cork</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="with=device-width, initial-scale:1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/head&foot.css" />
+    <link rel="stylesheet" href="styles/styles_membership.css" />
+    <link rel="stylesheet" href="styles/slicknav.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        <span class="h1FirstLetters">C</span>ork
+        <span class="h1FirstLetters">D</span>ocklands
+        <span class="h1FirstLetters">G</span>ym
+      </h1>
+
+      <nav id="mobile_menu"></nav>
+
+      <nav id="nav-menu">
+        <ul>
+          <li>
+            <a href="index.html" class="nav-menu__link">Home</a>
+          </li>
+          <li><a href="bmi.html" class="nav-menu__link">BMI Calculator</a></li>
+          <li>
+            <a href="membership.html" class="nav-menu__link">Membership</a>
+          </li>
+        </ul>
+      </nav>
+      <a href="index.html"><img id="headerLogo" src="images/logo.png" /></a>
+    </header>
+
+    <main class="main-membership">
+      <div class="main-membership__description">
+        <h2>Gym Membership</h2>
+        <p>Select from a <span>choice</span> of two memberships.</p>
+      </div>
+      <div class="main-membership__info">
+        <div class="main-membership__info__memberships">
+          <div class="main-membership__info__memberships__gold">
+            <h3>Gold</h3>
+            <h3>Membership</h3>
+            <div class="gold__hide__info">
+              <ul>
+                <li>Initial Fitness Assessment</li>
+                <li>Re-Assessments (4 per year)</li>
+                <li>
+                  Fitness Classes (inclusive of membership fee - no extra
+                  charge)
+                </li>
+                <li>
+                  Personal Training (1 free session per month with a personal
+                  trainer for 45 minutes)
+                </li>
+                <li>Gym towel on arrival (on request)</li>
+              </ul>
+              <div class="gold__hide__info__cost">
+                <div>Single Annual Rate: <span>€1200</span></div>
+                <div>Monthly DD: <span>€100</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="main-membership__info__memberships__classic">
+            <h3>Classic</h3>
+            <h3>Membership</h3>
+            <div class="classic__hide__info">
+              <ul>
+                <li>Initial Fitness Assessment</li>
+                <li>Re-Assessments (4 per year)</li>
+                <li>
+                  Discount on the price of Fitness Classes (20% off standard
+                  rate)
+                </li>
+              </ul>
+              <div class="classic__hide__info__cost">
+                <div>Single Annual Rate: <span>€890</span></div>
+                <div>Monthly DD: <span>€80</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-membership__info__form">
+          <div class="main-membership__info__form__block">
+            <div>
+              <input type="text" id="firstName" placeholder="First Name" />
+            </div>
+            <div id="firstName_error"></div>
+            <div>
+              <input type="text" id="lastName" placeholder="Last Name" />
+            </div>
+            <div id="lastName_error"></div>
+            <div>
+              <input type="text" id="phoneNumber" placeholder="Phone number" />
+            </div>
+            <div id="phoneNumber_error"></div>
+            <div>
+              <input type="email" id="email" placeholder="Email" />
+            </div>
+            <div id="email_error"></div>
+            <div class="main-membership__info__form__block__dob">
+              <label for="dob">Date of birth</label>
+              <input type="date" id="dob" />
+            </div>
+            <div id="dob_error"></div>
+            <div class="main-membership__info__form__block__radio">
+              <label for="gender">Gender</label>
+              <input type="radio" name="gender" id="gender" value="Male" />
+              <label for="male">Male</label>
+              <input type="radio" name="gender" id="gender" value="Female" />
+              <label for="female">Female</label>
+            </div>
+            <div id="gender_error"></div>
+            <div class="main-membership__info__form__block__health">
+              <label for="stateOfHealth">State of health</label>
+              <input type="text" id="stateOfHealth" />
+            </div>
+            <div id="stateOfHealth_error"></div>
+            <div class="main-membership__info__form__block__comments">
+              <textarea
+                placeholder="Comments"
+                name="otherComments"
+                rows="4"
+                cols="30"
+                id="otherComments"
+              ></textarea>
+            </div>
+            <div id="otherComments_error"></div>
+            <div>
+              <label>Contact me by</label>
+              <select name="Way To Contact" id="wayToContact">
+                <option value="email">Email</option>
+                <option value="phone">Phone</option>
+              </select>
+            </div>
+            <div class="grid-item" id="wayToContact_error"></div>
+            <div class="bmi-form__buttons">
+              <button onClick="submit()" class="button">Submit</button>
+              <button onClick="reset()" class="button">Reset</button>
+            </div>
+            <div id="success"></div>
+            <div id="error"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer">
+        <p id="contactInfo">
+          Contact Us<br />
+          <a href="tel:+353831234567">+35383 123 4567</a>
+          <br />
+          <a href="mailto:contact@cdg.com">contact@cdg.com</a>
+          <br />
+        </p>
+        <a href="index.html"><img id="footerLogo" src="images/logo.png" /></a>
+        <nav id="fNav">
+          <table id="fNAvTable">
+            <tr>
+              <td><a href="#top">Top</a></td>
+            </tr>
+            <tr>
+              <td><a href="about.html">About</a></td>
+            </tr>
+            <tr>
+              <td><a href="faq.html">FAQ</a></td>
+            </tr>
+            <tr>
+              <td><a href="careers.html">Careers</a></td>
+            </tr>
+          </table>
+        </nav>
+      </div>
+    </footer>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav-menu").slicknav({ prependTo: "#mobile_menu" });
+      });
+    </script>
+    <script src="js/form.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

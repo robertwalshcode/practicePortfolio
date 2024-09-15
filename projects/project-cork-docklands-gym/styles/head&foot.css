@@ -1,0 +1,289 @@
+header{
+    background-color:#2B2F38;
+    padding-top:1%;
+    padding-bottom:0%;
+    position:fixed; 
+    height:110px;
+    width:100%;
+    z-index: 1;
+}
+
+header h1{
+    padding-bottom:1%;
+    font-size: 180%;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    color:#ffffff;
+}
+
+.h1FirstLetters {
+    color:#edd28c;
+    font-family: "Satisfy", cursive;
+}
+
+header a,
+footer a {
+    text-decoration: none;
+    color:#bababa;
+    text-align: center;
+}
+
+header a:hover{
+    color:#edd28c;
+    text-shadow: none;
+}
+
+#mobile_menu {
+    display: block;
+}
+
+#nav-menu {
+    display: none;
+}
+
+#nav-menu ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+}
+
+.nav-menu__link {
+    font-size: 18px;
+    text-shadow: #bababa 1px 0 5px;
+}
+
+.nav-menu__link.active {
+    color: #ffffff;
+    text-shadow: #ffffff 1px 0 5px;
+}
+
+.nav-menu__link.active:hover {
+    color:#edd28c;
+    text-shadow: none;
+}
+
+#nav-menu:before {
+    content:" ";
+    height: 1px;
+    width: 100%;
+    background: #bababa;
+    display: block;
+    position: absolute;
+    top: -10px;
+  }
+
+#headerLogo {
+    position: absolute;
+    right: 15px;
+    top: 66%;
+    transform: translate(0, -50%);
+    width: 40px;
+}
+
+footer {
+    background-color:#2B2F38;
+    text-align: center;
+    color:#ffffff;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+}
+
+.footer a:hover{
+    color:#edd28c;
+}
+
+.footer a,
+.footer p {
+    font-size: 14px;
+}
+
+.footer p:before {
+    content: none;
+}
+
+#contactInfo {
+    text-align:left;
+    width: 40%;
+}
+
+#fNav {
+    width: 40%;
+}
+
+#fNav table {
+    width: 100%;
+}
+
+#fNav tr {
+    text-align: right;
+}
+
+#footerLogo {
+    width:40px;
+    margin: auto;
+}
+
+/* Everything below is just to make the header responsive */
+
+@media screen and (min-width: 475px) and (max-width: 768px) {
+    header h1 {
+        padding-bottom: 0;
+        font-size: 220%;
+        text-align: left;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    #headerLogo {
+        top: 55%;
+        width: 90px;
+    }
+    
+    #mobile_menu {
+        display: block;
+    }
+
+    #nav_menu {
+        display: none;
+    }
+
+    #footerLogo {
+        width:90px;
+    }
+
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    header {
+        height:161px;
+    }
+
+    header h1{
+        font-size: 300%;
+    }
+
+    #mobile_menu {
+        display: none;
+    }
+
+    #nav-menu {
+        display: block;
+        position: relative;
+        width: 450px;
+        margin: auto;
+        padding-bottom: 12px;
+    }
+
+    .nav-menu__link {
+        font-size: 22px;
+    }
+
+    #headerLogo {
+        right: 10px;
+        top: 50%;
+        width: 120px;
+    }
+
+    .footer {
+        padding: 10px 20px;
+    }
+
+    #footerLogo {
+        width:120px;
+    }
+
+    .footer a, .footer p {
+        font-size: 16px;
+    }
+
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1223px){
+    header {
+        height:161px;
+    }
+
+    header h1{
+        font-size: 300%;
+    }
+
+    #mobile_menu {
+        display: none;
+    }
+
+    #nav-menu {
+        display: block;
+        position: relative;
+        width: 740px;
+        margin:auto;
+        padding-bottom: 12px;
+    }
+
+    .nav-menu__link {
+        font-size: 26px;
+    }
+
+    #headerLogo {
+        right: 10px;
+        top: 50%;
+        width: 120px;
+    }
+
+    .footer {
+        padding: 10px 20px;
+    }
+
+    #footerLogo {
+        width:120px;
+    }
+    
+}
+
+@media screen and (min-width: 1224px) {
+    header {
+        height:161px;
+    }
+
+    header h1{
+        font-size: 300%;
+    }
+
+    #mobile_menu {
+        display: none;
+    }
+
+    #nav-menu {
+        display: block;
+        position: relative;
+        width: 1000px;
+        margin:auto;
+        padding-bottom: 12px;
+    }
+
+    .nav-menu__link {
+        font-size: 26px;
+    }
+
+    #headerLogo {
+        right: 10px;
+        top: 50%;
+        width: 120px;
+    }
+
+    .footer {
+        padding: 10px 20px;
+    }
+
+    #footerLogo {
+        width:120px;
+    }
+}
