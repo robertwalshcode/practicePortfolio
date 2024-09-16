@@ -5,9 +5,25 @@ const lightTheme = () => {
     document.body.style.color = '#0D0A20';
     document.getElementById('languages-container').style.color = '#5B42F5';
     document.getElementById('portrait').style.borderColor = '#0D0A20'
-    document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.5)';
     document.getElementById("light-theme").style.backgroundColor = '#0D0A20';
-    document.getElementById("theme-text").innerHTML = 'dark switch';
+    
+    // header background color dependant on screen width
+    if (window.innerWidth <= 700) {
+        document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+    } else {
+        document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.5)';
+    }
+
+    // theme button text dependant on screen width
+    if (window.innerWidth >= 700) {
+        document.getElementById("theme-text").innerHTML = 'dark switch';
+    } else if (window.innerWidth >= 560 && window.innerWidth < 700) {
+        document.getElementById("theme-text").innerHTML = 'dark';
+    } else {
+        document.getElementById("theme-text").innerHTML = '';
+    }
+
+    // change event listener and id of the element so it can be changed back
     document.getElementById("light-theme").removeEventListener('click', lightTheme);
     document.getElementById("light-theme").addEventListener('click', darkTheme);
     document.getElementById("light-theme").id = 'dark-theme';
@@ -19,16 +35,64 @@ const darkTheme =  () => {
     document.body.style.color = '#E6EDF3';
     document.getElementById('languages-container').style.color = '#E6EDF3';
     document.getElementById('portrait').style.borderColor = '#E6EDF3';
-    document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.1)';
     document.getElementById("dark-theme").style.backgroundColor = '#FFFFFF';
-    document.getElementById("theme-text").innerHTML = 'light switch';
+
+    // header background color dependant on screen width
+    if (window.innerWidth <= 700) {
+        document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+    } else {
+        document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.1)';
+    }
+
+    // theme button text dependant on screen width
+    if (window.innerWidth >= 700) {
+        document.getElementById("theme-text").innerHTML = 'light switch';
+    } else if (window.innerWidth >= 560 && window.innerWidth < 700) {
+        document.getElementById("theme-text").innerHTML = 'light';
+    } else {
+        document.getElementById("theme-text").innerHTML = '';
+    }
+    
+    // change event listener and id of the element so it can be changed back
     document.getElementById("dark-theme").removeEventListener('click', darkTheme);
     document.getElementById("dark-theme").addEventListener('click', lightTheme);
     document.getElementById("dark-theme").id = 'light-theme';
 }
 
-// event listner to change theme
+// initial event listner to change theme
 document.getElementById("light-theme").addEventListener('click', lightTheme);
+
+const resizeChanges = () => {
+
+    // Changes dependant on theme button id
+    if(document.getElementById('light-theme')) {
+
+        if(window.innerWidth >= 700) {
+            document.getElementById("theme-text").innerHTML = 'light switch';
+            document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.5)';
+        } else if(window.innerWidth >= 560 && window.innerWidth < 700) {
+            document.getElementById("theme-text").innerHTML = 'light';
+            document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+        } else {
+            document.getElementById("theme-text").innerHTML = '';
+            document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+        }
+    } else {
+        if(window.innerWidth >= 700) {
+            document.getElementById("theme-text").innerHTML = 'dark switch';
+            document.getElementById('main-header').style.backgroundColor = 'rgba(13, 13, 13, 0.1)';
+        } else if(window.innerWidth >= 560 && window.innerWidth < 700) {
+            document.getElementById("theme-text").innerHTML = 'dark';
+            document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+        } else {
+            document.getElementById("theme-text").innerHTML = '';
+            document.getElementById('main-header').style.backgroundColor = '#0D0A20';
+        }
+    }
+}
+
+// Event listner for changes on resizing screen
+window.addEventListener('resize', resizeChanges);
 
 // allow project-content to appear on mouseover project-background + allow project-content to become hidden on mouseout of project-background
 //define variables
