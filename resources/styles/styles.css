@@ -365,7 +365,7 @@ main {
 }
 
 .project2-background {
-    background-image: url('../images/breakout.png');
+    background-image: url('../images/breakout-v2.png');
     background-size: cover;
     background-position: center;
     aspect-ratio: 16 / 9;
