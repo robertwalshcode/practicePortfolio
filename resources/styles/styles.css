@@ -168,7 +168,7 @@ header button {
     height: 54rem;
     background: linear-gradient(186deg, #000000, #3e1fc5); 
     rotate: 354deg;
-    width: 200%;
+    width: 140%;
     position: absolute;
     top:-14rem;
     left: -6rem;
@@ -563,7 +563,7 @@ footer .icon {
     height: 37rem;
     rotate: 354deg;
     background: linear-gradient(186deg, #3e1fc5, #0D0A20);
-    width: 200%;
+    width: 140%;
     position: absolute;
     bottom: -10rem;
     left: -6rem;
@@ -574,7 +574,7 @@ footer .icon {
     height: 38rem;
     rotate: 2deg;
     background: linear-gradient(186deg, #2b1786, #0D0A20);
-    width: 200%;
+    width: 140%;
     position: absolute;
     bottom: -10rem;
     left: -6rem;
