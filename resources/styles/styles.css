@@ -375,7 +375,7 @@ main {
 }
 
 .project3-background {
-    background-image: url('resources/images/CorkDocklandsGym.png');
+    background-image: url('#');
     background-size: cover;
     background-position: center;
     aspect-ratio: 16 / 9;
@@ -385,7 +385,7 @@ main {
 }
 
 .project4-background {
-    background-image: url('resources/images/CorkDocklandsGym.png');
+    background-image: url('#');
     background-size: cover;
     background-position: center;
     aspect-ratio: 16 / 9;
@@ -395,7 +395,7 @@ main {
 }
 
 .project5-background {
-    background-image: url('resources/images/CorkDocklandsGym.png');
+    background-image: url('#');
     background-size: cover;
     background-position: center;
     aspect-ratio: 16 / 9;
