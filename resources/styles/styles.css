@@ -286,12 +286,12 @@ main {
     margin-top: 0.5rem;
 }
 
-.languages {
+.skills {
     margin-top: 6rem;
     grid-column: 1 / 2;
 }
 
-.languages-container {
+.skills-container {
     margin-top: 2rem;
     display: flex;
     width: 100%;
@@ -299,7 +299,7 @@ main {
     color: #E6EDF3;
 }
 
-.languages-container h4 {
+.skills-container h4 {
     text-align: center;
     margin: auto 5rem auto 0;
     height: 3rem;
@@ -311,7 +311,7 @@ main {
     transition: all 0.2s ease-in;
 }
 
-.languages-container h4:hover {
+.skills-container h4:hover {
     background-color: #E6EDF3;
     color: #5B42F5;
 }
@@ -649,7 +649,7 @@ footer .icon {
         align-self: center;
     }
 
-    .languages {
+    .skills {
         margin-top: 0;
     }
 
@@ -773,7 +773,7 @@ footer .icon {
         margin: 0 4%;
     }
 
-    .languages-container h4 {
+    .skills-container h4 {
         margin-right: 1rem;
     }
 }
@@ -794,7 +794,7 @@ footer .icon {
         margin-top: 1rem;
     }
     
-    .languages {
+    .skills {
         margin-top: 2rem;
     }
 
@@ -879,7 +879,7 @@ footer .icon {
         margin-top: 3rem;
     }
     
-    .languages-container {
+    .skills-container {
         flex-wrap: wrap;
         row-gap: 1rem;
     }
