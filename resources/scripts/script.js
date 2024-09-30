@@ -4,7 +4,7 @@ const lightTheme = () => {
     document.body.style.backgroundColor = '#E6EDF3';
     document.body.style.color = '#0D0A20';
     document.getElementById('skills-container').style.color = '#5B42F5';
-    document.getElementById('portrait').style.borderColor = '#0D0A20'
+    document.getElementById('portrait').style.borderColor = '#0D0A20';
     document.getElementById("light-theme").style.backgroundColor = '#0D0A20';
     
     // header background color dependant on screen width
