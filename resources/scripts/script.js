@@ -3,7 +3,7 @@
 const lightTheme = () => {
     document.body.style.backgroundColor = '#E6EDF3';
     document.body.style.color = '#0D0A20';
-    document.getElementById('languages-container').style.color = '#5B42F5';
+    document.getElementById('skills-container').style.color = '#5B42F5';
     document.getElementById('portrait').style.borderColor = '#0D0A20'
     document.getElementById("light-theme").style.backgroundColor = '#0D0A20';
     
@@ -33,7 +33,7 @@ const lightTheme = () => {
 const darkTheme =  () => {
     document.body.style.backgroundColor = '#0D0A20';
     document.body.style.color = '#E6EDF3';
-    document.getElementById('languages-container').style.color = '#E6EDF3';
+    document.getElementById('skills-container').style.color = '#E6EDF3';
     document.getElementById('portrait').style.borderColor = '#E6EDF3';
     document.getElementById("dark-theme").style.backgroundColor = '#FFFFFF';
 
